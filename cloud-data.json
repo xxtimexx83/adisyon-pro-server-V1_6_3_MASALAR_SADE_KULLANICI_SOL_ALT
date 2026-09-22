@@ -1,0 +1,336 @@
+{
+  "businesses": {
+    "biz_2defa6c0f8f95f32": {
+      "id": "biz_2defa6c0f8f95f32",
+      "code": "AP-20B64B",
+      "name": "TEST CAFE",
+      "createdAt": 1787353286640,
+      "active": true
+    }
+  },
+  "users": {
+    "usr_2c273a45acbe4990": {
+      "id": "usr_2c273a45acbe4990",
+      "businessId": "biz_2defa6c0f8f95f32",
+      "name": "Ahmet",
+      "username": "muco.kucuker@gmail.com",
+      "email": "muco.kucuker@gmail.com",
+      "role": "manager",
+      "passwordSalt": "9a94e2093378f96059ed105576d2e367",
+      "passwordHash": "6d079d116993cef7877160d92b4c083f97b3c86c67ffb41254b1279bf2ab9c6075710cff0c9d52994f68bbf4a8366f1c3a951c954ceede278531402668fade3e",
+      "active": true
+    },
+    "usr_b1ad62033c094c3a": {
+      "id": "usr_b1ad62033c094c3a",
+      "businessId": "biz_2defa6c0f8f95f32",
+      "name": "AHMET",
+      "username": "ahmet31",
+      "email": "",
+      "role": "kitchen",
+      "passwordSalt": "297865d28f0c73a38c794c73881ed4dd",
+      "passwordHash": "543ab55a1f76fa6dda9eb673bc1b02df361c05d5d437a2d4eb6617a8c2db81815da928076fbfaf030a081fb9895a5d4b51de42f6195a7de991fbad0908615a1a",
+      "active": true
+    }
+  },
+  "states": {
+    "biz_2defa6c0f8f95f32": {
+      "tableCount": 12,
+      "tables": {
+        "1": {
+          "items": [
+            {
+              "id": "p1",
+              "name": "Köfte",
+              "price": 220,
+              "emoji": "🥩",
+              "cat": "Tümü",
+              "qty": 3
+            },
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "emoji": "🥤",
+              "cat": "Tümü",
+              "qty": 2
+            }
+          ],
+          "openedAt": 1788987129153,
+          "updatedAt": 1788987265074
+        },
+        "2": {
+          "items": [
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "qty": 2
+            }
+          ],
+          "openedAt": 1787353478811,
+          "updatedAt": 1788987026119
+        },
+        "5": {
+          "items": [
+            {
+              "id": "p4",
+              "name": "Çay",
+              "price": 35,
+              "emoji": "🫖",
+              "cat": "Tümü",
+              "qty": 2
+            },
+            {
+              "id": "p5",
+              "name": "Hamburger",
+              "price": 240,
+              "emoji": "🍔",
+              "cat": "Tümü",
+              "qty": 2
+            },
+            {
+              "id": "p6",
+              "name": "Ayran",
+              "price": 45,
+              "emoji": "🥛",
+              "cat": "Tümü",
+              "qty": 2
+            },
+            {
+              "id": "p3",
+              "name": "Türk Kahvesi",
+              "price": 75,
+              "emoji": "☕",
+              "cat": "Tümü",
+              "qty": 1
+            }
+          ],
+          "openedAt": 1788987096524,
+          "updatedAt": 1788987096524
+        }
+      },
+      "products": [
+        {
+          "id": "p1",
+          "name": "Köfte",
+          "price": 220
+        },
+        {
+          "id": "p2",
+          "name": "Kola",
+          "price": 60
+        },
+        {
+          "id": "p3",
+          "name": "Türk Kahvesi",
+          "price": 75
+        },
+        {
+          "id": "p4",
+          "name": "Çay",
+          "price": 35
+        },
+        {
+          "id": "p5",
+          "name": "Hamburger",
+          "price": 240
+        },
+        {
+          "id": "p6",
+          "name": "Ayran",
+          "price": 45
+        }
+      ],
+      "kitchenTickets": [
+        {
+          "id": "kt_1787353384260_9046528522fa68",
+          "tableNo": 1,
+          "items": [
+            {
+              "id": "p1",
+              "name": "Köfte",
+              "price": 220,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterId": "usr_2c273a45acbe4990",
+          "waiterName": "Ahmet",
+          "createdAt": 1787353384260,
+          "status": "delivered",
+          "readyAt": 1787353397046,
+          "deliveredAt": 1787353493654
+        },
+        {
+          "id": "kt_1787353478811_f82b1722ca2a6",
+          "tableNo": 2,
+          "items": [
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterId": "usr_2c273a45acbe4990",
+          "waiterName": "Ahmet",
+          "createdAt": 1787353478811,
+          "status": "ready",
+          "readyAt": 1788987030447
+        },
+        {
+          "id": "kt_1787757357565_d90056946c48e",
+          "tableNo": 1,
+          "items": [
+            {
+              "id": "p1",
+              "name": "Köfte",
+              "price": 220,
+              "qty": 1
+            }
+          ],
+          "note": "az ğişmiş",
+          "waiterId": "usr_2c273a45acbe4990",
+          "waiterName": "Ahmet",
+          "createdAt": 1787757357565,
+          "status": "ready",
+          "readyAt": 1788987030978
+        },
+        {
+          "id": "kt_1788987026119",
+          "tableNo": 2,
+          "items": [
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterName": "Ahmet",
+          "createdAt": 1788987026119,
+          "status": "ready",
+          "readyAt": 1788987031612
+        },
+        {
+          "id": "kt_1788987081222",
+          "tableNo": 4,
+          "items": [
+            {
+              "id": "p4",
+              "name": "Çay",
+              "price": 35,
+              "qty": 2
+            },
+            {
+              "id": "p5",
+              "name": "Hamburger",
+              "price": 240,
+              "qty": 2
+            },
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "qty": 1
+            },
+            {
+              "id": "p6",
+              "name": "Ayran",
+              "price": 45,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterName": "Ahmet",
+          "createdAt": 1788987081222,
+          "status": "ready",
+          "readyAt": 1788987134570
+        },
+        {
+          "id": "kt_1788987096524",
+          "tableNo": 5,
+          "items": [
+            {
+              "id": "p4",
+              "name": "Çay",
+              "price": 35,
+              "qty": 2
+            },
+            {
+              "id": "p5",
+              "name": "Hamburger",
+              "price": 240,
+              "qty": 2
+            },
+            {
+              "id": "p6",
+              "name": "Ayran",
+              "price": 45,
+              "qty": 2
+            },
+            {
+              "id": "p3",
+              "name": "Türk Kahvesi",
+              "price": 75,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterName": "Ahmet",
+          "createdAt": 1788987096524,
+          "status": "ready",
+          "readyAt": 1788987135154
+        },
+        {
+          "id": "kt_1788987129153",
+          "tableNo": 1,
+          "items": [
+            {
+              "id": "p1",
+              "name": "Köfte",
+              "price": 220,
+              "qty": 1
+            }
+          ],
+          "note": "",
+          "waiterName": "Ahmet",
+          "createdAt": 1788987129153,
+          "status": "ready",
+          "readyAt": 1788987136171
+        },
+        {
+          "id": "kt_1788987265074",
+          "tableNo": 1,
+          "items": [
+            {
+              "id": "p1",
+              "name": "Köfte",
+              "price": 220,
+              "qty": 2
+            },
+            {
+              "id": "p2",
+              "name": "Kola",
+              "price": 60,
+              "qty": 2
+            }
+          ],
+          "note": "",
+          "waiterName": "Ahmet",
+          "createdAt": 1788987265074,
+          "status": "ready",
+          "readyAt": 1788987315157
+        }
+      ],
+      "kitchenStatuses": {},
+      "dailySales": [],
+      "settings": {
+        "currency": "TRY",
+        "timezone": "Europe/Istanbul"
+      }
+    }
+  }
+}

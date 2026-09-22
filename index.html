@@ -1,0 +1,582 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADİSYON PRO • V1.6.2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0e1014;color:#f7f8fa;font-family:Arial,sans-serif}.page{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr}
+.left{padding:54px;position:relative;overflow:hidden;background:radial-gradient(circle at 20% 25%,#4b3517 0,transparent 28%),linear-gradient(145deg,#191c22,#0d0f12)}
+.left:after{content:"";position:absolute;right:-140px;bottom:-190px;width:520px;height:520px;border:1px solid #ff9f0a40;border-radius:50%}
+.brand{display:flex;align-items:center;gap:13px;font-family:Arial Black,Arial}.logo{width:48px;height:48px;border-radius:14px;background:#ff9f0a;display:grid;place-items:center;font-size:25px}.brand small{display:block;color:#ff9f0a;font-size:9px;letter-spacing:2px;margin-top:3px}
+.pitch{max-width:620px;margin-top:115px}.pitch h1{font:44px/1.12 Arial Black,Arial;margin:0}.pitch h1 span{color:#ff9f0a}.pitch p{color:#a4acb7;font-size:17px;line-height:1.7}.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.chip{padding:12px 14px;background:#191d22;border:1px solid #303640;border-radius:12px;color:#cdd2d9;font-weight:bold;font-size:12px}
+.right{background:#15181d;display:flex;align-items:center;justify-content:center;padding:30px}.card{width:min(465px,100%);background:#1d2127;border:1px solid #303640;border-radius:22px;padding:30px;box-shadow:0 25px 70px #0006}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:#12151a;border-radius:12px;padding:5px;margin-bottom:25px}.tab{border:0;background:none;color:#89929e;padding:12px;border-radius:9px;font-weight:800;cursor:pointer}.tab.active{background:#ff9f0a;color:white}
+h2{font-family:Arial Black,Arial;margin:0 0 6px}.sub{color:#9099a5;margin:0 0 22px}label{display:block;font-size:10px;font-weight:800;color:#cdd2d8;margin:13px 0 7px;letter-spacing:.5px}
+input{width:100%;height:49px;border:1px solid #38404b;border-radius:10px;background:#12151a;color:white;padding:0 13px;outline:0}input:focus{border-color:#ff9f0a}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:13px;font-size:12px;color:#a2aab5}.check{display:flex;align-items:center;gap:7px}.check input{width:auto;height:auto}.link{color:#ffad28;cursor:pointer;font-weight:bold}
+.btn{width:100%;height:50px;border:0;border-radius:11px;background:#ff9f0a;color:white;font-weight:900;margin-top:18px;cursor:pointer}.secondary{background:#272c34;border:1px solid #3b424d}.msg{min-height:20px;margin-top:11px;color:#ff7474;font-size:12px}.ok{color:#55d58c}.hidden{display:none!important}
+.back{border:0;background:none;color:#ffad28;font-weight:bold;padding:0;cursor:pointer;margin-bottom:18px}.note{padding:11px;background:#171b20;border:1px solid #303640;border-radius:10px;color:#9ca5b0;font-size:11px;line-height:1.5;margin-top:12px}
+.dashboard{min-height:100vh;padding:30px;background:#111318}.top{display:flex;justify-content:space-between}.logout{background:#252a31;color:white;border:1px solid #3a414c;border-radius:9px;padding:10px 14px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:35px}.stat{background:#1c2026;border:1px solid #303640;border-radius:14px;padding:18px}.stat small{color:#8f98a4}.stat b{display:block;margin-top:8px;font:22px Arial Black,Arial}.orange{color:#ff9f0a}
+@media(max-width:850px){.page{grid-template-columns:1fr}.left{display:none}.right{min-height:100vh}.stats{grid-template-columns:1fr 1fr}}
+
+.userWrap{margin-top:18px;background:#1c2026;border:1px solid #303640;border-radius:14px;padding:18px}
+.userHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.userHead h3{margin:0;font-family:Arial Black,Arial}
+.userGrid{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr auto;gap:9px;margin-top:14px}
+.userGrid input,.userGrid select{height:44px}
+.addUserBtn{border:0;border-radius:10px;background:#ff9f0a;color:#fff;font-weight:900;padding:0 18px;cursor:pointer}
+.userList{margin-top:14px;border:1px solid #303640;border-radius:10px;overflow:hidden}
+.userRow{display:grid;grid-template-columns:1.2fr .7fr .9fr 1.4fr;gap:10px;padding:12px 14px;border-bottom:1px solid #2b3139;align-items:center}
+.userRow:last-child{border-bottom:0}.userRow small{color:#8f98a4}.userActions{display:flex;gap:6px;flex-wrap:wrap}.miniBtn{border:1px solid #3a414c;background:#252a31;color:#fff;border-radius:8px;padding:7px 9px;font-weight:800;cursor:pointer}.miniBtn.warn{background:#7a4b00}.miniBtn.danger{background:#6f2525}.roleBadge{justify-self:start;background:#252a31;border:1px solid #3a414c;border-radius:999px;padding:6px 9px;font-size:10px}
+@media(max-width:900px){.userGrid{grid-template-columns:1fr}.addUserBtn{height:44px}.userRow{grid-template-columns:1fr}}
+
+
+.ops{margin-top:18px}.navOps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.navOps button{border:1px solid #3a414c;background:#1c2026;color:#fff;border-radius:10px;padding:11px 15px;font-weight:900;cursor:pointer}.navOps button.active{background:#ff9f0a;border-color:#ff9f0a}.panelBox{background:#1c2026;border:1px solid #303640;border-radius:14px;padding:18px}.tablesGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tableCard{min-height:105px;border:1px solid #31583b;background:#17211b;border-radius:13px;padding:15px;cursor:pointer}.tableCard.open{background:#382717;border-color:#ff9f0a}.tableCard h3{margin:0 0 8px}.tableCard small{color:#aab2bd}.orderLayout{display:grid;grid-template-columns:1fr 1fr;gap:14px}.products,.cart{display:grid;gap:8px}.productBtn{display:flex;justify-content:space-between;background:#252a31;color:#fff;border:1px solid #3a414c;border-radius:10px;padding:13px;cursor:pointer}.cartRow,.ticket{background:#171a20;border:1px solid #303640;border-radius:11px;padding:13px}.cartRow{display:flex;justify-content:space-between;align-items:center}.orangeBtn{border:0;background:#ff9f0a;color:white;border-radius:10px;padding:13px;font-weight:900;cursor:pointer}.ticketGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.ticket h3{margin:0 0 10px}.ticket .item{padding:6px 0;border-bottom:1px solid #2c323b}.ticket .meta{color:#94a0ad;font-size:12px;margin:9px 0}.ticket button{width:100%;margin-top:10px}.empty{color:#8f98a4;padding:20px;text-align:center}.backBtn{margin-bottom:12px}.qtyBtn{border:0;background:#343a44;color:white;border-radius:6px;padding:4px 8px;cursor:pointer}@media(max-width:900px){.tablesGrid,.ticketGrid{grid-template-columns:1fr 1fr}.orderLayout{grid-template-columns:1fr}}@media(max-width:560px){.tablesGrid,.ticketGrid{grid-template-columns:1fr}}
+
+/* V1.5.1 AYARLAR */
+#managerNav{display:flex;flex-direction:column;gap:7px}.settingsLayout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px}.settingsMenu{background:#1c2026;border:1px solid #303640;border-radius:16px;padding:10px;min-height:180px}.settingsEntry{width:100%;min-height:50px;border:1px solid #ff9f0a;background:linear-gradient(90deg,#3b2a15,#242018);color:#fff;border-radius:12px;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;padding:0 14px;text-align:left;cursor:pointer;box-shadow:0 0 18px #ff9f0a18}.settingsEntry .chev{font-size:24px;color:#aab2bd}.productManageGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.productManageCard{background:#171a20;border:1px solid #303640;border-radius:12px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px}.productManageCard small{display:block;color:#ffad28;margin-top:5px}@media(max-width:900px){.settingsLayout{grid-template-columns:1fr}.productManageGrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.productManageGrid{grid-template-columns:1fr}}
+
+/* V1.5 SOL İKONLU OPERASYON MENÜSÜ */
+.opsShell{display:grid;grid-template-columns:245px minmax(0,1fr);gap:16px;align-items:start}.sideOps{position:sticky;top:18px;background:#171a20;border:1px solid #303640;border-radius:16px;padding:9px;display:flex;flex-direction:column;gap:7px;transition:.2s}.sideItem,.sideToggle{width:100%;min-height:50px;border:1px solid transparent;background:transparent;color:#c5cbd3;border-radius:12px;display:flex;align-items:center;gap:13px;padding:0 14px;font-weight:900;cursor:pointer;text-align:left}.sideItem:hover{background:#20242b;color:#fff}.sideItem.active{background:linear-gradient(90deg,#3b2a15,#242018);border-color:#9b6509;color:#fff;box-shadow:inset 3px 0 #fff,0 0 18px #ff9f0a18}.sideIcon{width:25px;min-width:25px;text-align:center;font-size:18px}.sideLabel{white-space:nowrap}.sideToggle{color:#ffb13b;border-bottom:1px solid #2d333c;border-radius:9px}.sideOps.collapsed{width:68px}.sideOps.collapsed .sideLabel{display:none}.sideOps.collapsed .sideItem,.sideOps.collapsed .sideToggle{justify-content:center;padding:0}.opsShell:has(.sideOps.collapsed){grid-template-columns:68px minmax(0,1fr)}.opsMain{min-width:0}.navOps{display:none!important}@media(max-width:760px){.opsShell{grid-template-columns:68px minmax(0,1fr);gap:9px}.sideOps{width:68px}.sideOps .sideLabel{display:none}.sideItem,.sideToggle{justify-content:center;padding:0}.dashboard{padding:15px}.stats{grid-template-columns:1fr 1fr}}
+
+/* V1.6.2 PROFESYONEL URUN MODALI */
+.modalOverlay{position:fixed;inset:0;background:#000a;display:grid;place-items:center;z-index:9999;padding:20px}.modalCard{width:min(560px,100%);background:#1c2026;border:1px solid #3a414c;border-radius:18px;padding:22px;box-shadow:0 28px 80px #000b}.modalHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modalHead h2{margin:0}.modalClose{border:0;background:#2a2f37;color:#fff;width:36px;height:36px;border-radius:9px;font-size:20px;cursor:pointer}.modalGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modalGrid .full{grid-column:1/-1}.modalGrid select{width:100%;height:49px;border:1px solid #38404b;border-radius:10px;background:#12151a;color:white;padding:0 13px}.photoPick{border:1px dashed #4a5360;border-radius:12px;padding:14px;background:#15181d}.photoPreview{width:92px;height:92px;border-radius:12px;object-fit:cover;background:#111318;border:1px solid #303640;display:none;margin-top:10px}.modalActions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.modalActions button{min-width:110px}.productThumb{width:52px;height:52px;border-radius:9px;object-fit:cover;border:1px solid #303640;margin-right:10px}.productInfo{display:flex;align-items:center;min-width:0}.productMeta em{display:block;color:#8f98a4;font-style:normal;font-size:11px;margin-top:3px}@media(max-width:560px){.modalGrid{grid-template-columns:1fr}.modalGrid .full{grid-column:auto}}
+
+/* V1.6.2 compact header / user card */
+.topSummary,.stats,.dashStats,.headerStats{display:none!important}
+#businessHeaderCompact{display:none!important}
+
+.sidebarUserArea{
+  margin-top:auto;
+  padding:12px;
+  border-top:1px solid #2f3540;
+  position:relative;
+}
+.sidebarUserCard{
+  width:100%;
+  border:1px solid #8a5a08;
+  background:#1c2026;
+  color:#fff;
+  border-radius:14px;
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  text-align:left;
+}
+.sidebarUserCard:hover{border-color:#ff9f0a}
+.sidebarAvatar{
+  width:38px;height:38px;border-radius:10px;background:#ff9f0a;
+  display:grid;place-items:center;font-weight:900;color:#fff;flex:0 0 auto;
+}
+.sidebarUserText{min-width:0;flex:1}
+.sidebarUserText b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
+.sidebarUserText small{display:block;color:#9099a5;font-size:10px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebarUserArrow{color:#9aa3ae;font-size:12px}
+.sidebarUserMenu{
+  position:absolute;left:12px;right:12px;bottom:76px;
+  background:#242932;border:1px solid #38404a;border-radius:14px;
+  padding:8px;box-shadow:0 18px 50px #0009;z-index:9999;
+}
+.sidebarUserMenu.hidden{display:none!important}
+.sidebarMenuLabel{color:#6f7885;font-size:9px;letter-spacing:1.4px;padding:6px 8px 8px}
+.sidebarAction{
+  width:100%;border:0;background:transparent;color:#d7dbe0;
+  border-radius:9px;padding:10px 9px;text-align:left;cursor:pointer;font-weight:700;
+}
+.sidebarAction:hover{background:#2e343e;color:#fff}
+.sidebarAction.danger{border-top:1px solid #3a414c;border-radius:0;margin-top:5px;padding-top:12px}
+.sidebarMeta{padding:8px 12px 2px;color:#68717d;font-size:9px;text-align:center}
+
+.appToast{
+  position:fixed;right:22px;top:22px;z-index:99999;
+  background:#1f242b;border:1px solid #39414c;border-left:4px solid #ff9f0a;
+  color:#fff;border-radius:11px;padding:13px 16px;min-width:280px;max-width:420px;
+  box-shadow:0 18px 50px #0008;opacity:0;transform:translateY(-12px);
+  pointer-events:none;transition:.2s ease;
+}
+.appToast.show{opacity:1;transform:translateY(0)}
+.appToast.success{border-left-color:#25c26e}
+.appToast.error{border-left-color:#ff5757}
+
+@media(max-width:900px){
+  .sidebarUserText{display:none}
+  .sidebarUserCard{justify-content:center;padding:8px}
+  .sidebarUserArrow{display:none}
+  .sidebarUserMenu{left:72px;right:auto;width:230px;bottom:12px}
+}
+
+
+/* V1.6.2 - yeni sol menü */
+.sideSectionLabel{padding:17px 14px 7px;color:#777f8b;font-size:10px;font-weight:900;letter-spacing:1.5px}
+.passiveMenu{cursor:default}
+.passiveMenu:hover{background:inherit!important;border-color:transparent!important}
+.sideOps.collapsed .sideSectionLabel{height:12px;padding:8px 0;border-top:1px solid #2f3540;margin-top:8px}
+
+
+/* V1.6.2 - Ayarlar menüsü */
+.settingsMenuV156{display:flex;flex-direction:column;gap:6px;min-width:310px;max-width:360px}
+.settingsMenuItem{width:100%;display:grid;grid-template-columns:28px 1fr 20px;align-items:center;text-align:left;
+ padding:12px 14px;border:1px solid #2b3039;border-radius:10px;background:#171a20;color:#e8eaf0;font-weight:800}
+.settingsMenuItem b{font:inherit}.settingsArrow{opacity:.55;text-align:right}
+.settingsMenuItem:hover{border-color:#555d69}
+.activeSettings{border-color:#ff9f0a!important;box-shadow:inset 3px 0 0 #ff9f0a}
+
+.businessSettingsPanel{width:100%;max-width:1250px;padding:2px 4px 28px}.bsTop{display:flex;align-items:center;gap:15px;margin-bottom:12px}.bsTop h2{margin:0}.bsBack{background:#242830;color:#fff;border:1px solid #363c46;border-radius:9px;padding:9px 13px;font-weight:800}.bsCard{background:#1a1d23;border:1px solid #2e333c;border-radius:15px;padding:18px;margin:0 0 15px}.bsCard h3{font-size:14px;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid #2d323a}.bsCard label:not(.bsSwitch){display:block;font-size:13px;font-weight:800;margin:0 0 12px}.bsCard input[type=text],.bsCard input[type=number],.bsCard input[type=time],.bsCard select{width:100%;box-sizing:border-box;margin-top:8px;padding:12px 14px;background:#252930;color:#fff;border:1px solid #373d47;border-radius:11px}.bsTimezone{font-size:12px;color:#aeb5c1;margin:2px 0 20px}.bsSwitchRow{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;margin:6px 0;background:#24282e;border:1px solid #323740;border-radius:11px;font-size:12px;font-weight:800}.bsSwitch{position:relative;width:44px;height:25px;flex:0 0 44px}.bsSwitch input{display:none}.bsSwitch i{position:absolute;inset:0;border-radius:20px;background:#3b4049}.bsSwitch i:before{content:"";position:absolute;width:19px;height:19px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}.bsSwitch input:checked+i{background:#ff9f0a}.bsSwitch input:checked+i:before{transform:translateX(19px)}.bsSave{width:100%;padding:13px;background:#ff9f0a;color:#fff;border:0;border-radius:12px;font-weight:900;font-size:14px}
+
+/* V1.6.2 - Ayarlar sol menü sabit, içerik sağda */
+.businessSettingsPanel{min-width:0!important;max-width:none!important;width:100%!important;overflow:auto}
+.settingsContentHeader{margin:0 0 16px;padding:0 2px}
+.settingsContentHeader h2{margin:0 0 5px;font-size:26px}
+.settingsContentHeader p{margin:0;color:#9da5b2;font-size:13px}
+.settingsMenuV156{align-self:stretch}
+
+
+/* V1.6.2 - Ayarlar ekranı referans stile yaklaştırıldı */
+.settingsMenuRestStyle{
+  width:310px!important;
+  min-width:310px!important;
+  max-width:310px!important;
+  padding:0!important;
+  background:#1b1f25;
+  border:1px solid #2d333c;
+  border-radius:14px;
+  overflow:hidden;
+  gap:0!important;
+  align-self:stretch;
+}
+.settingsMenuRestStyle .settingsMenuItem{
+  width:100%;
+  min-height:48px;
+  display:grid;
+  grid-template-columns:34px 1fr 22px;
+  align-items:center;
+  gap:0;
+  padding:0 14px;
+  margin:0;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#9098a5;
+  box-shadow:none!important;
+  text-align:left;
+  font-size:14px;
+  font-weight:800;
+}
+.settingsMenuRestStyle .settingsMenuItem + .settingsMenuItem{
+  border-top:1px solid transparent!important;
+}
+.settingsMenuRestStyle .settingsMenuItem:hover{
+  background:#22272e!important;
+  color:#d5d9df;
+}
+.settingsMenuRestStyle .settingsIcon{
+  font-size:15px;
+  width:24px;
+  opacity:.95;
+  text-align:center;
+}
+.settingsMenuRestStyle .settingsArrow{
+  text-align:right;
+  font-size:20px;
+  opacity:.55;
+}
+.settingsMenuRestStyle .noArrow{opacity:0}
+.settingsMenuRestStyle .activeSettings{
+  background:#ff9f0a!important;
+  color:#fff!important;
+  border-radius:12px!important;
+  margin:2px 7px!important;
+  width:calc(100% - 14px)!important;
+  min-height:46px;
+  box-shadow:0 10px 20px rgba(255,159,10,.28)!important;
+}
+.settingsMenuRestStyle .activeSettings .settingsArrow,
+.settingsMenuRestStyle .activeSettings .settingsIcon{
+  opacity:1!important;
+}
+.businessSettingsPanel{
+  padding-left:18px!important;
+}
+.bsCard{
+  background:#1b1f25!important;
+  border-color:#2d333c!important;
+}
+
+
+/* V1.6.2 - AYARLAR: SOL SEKME SABİT / SAĞ İÇERİK */
+#settingsPanel, .settingsPanel, .settingsLayout, .settingsWrap {
+  min-width:0;
+}
+.settingsMenuV156{
+  display:flex!important;
+  flex-direction:column!important;
+  flex:0 0 310px!important;
+  width:310px!important;
+  min-width:310px!important;
+  max-width:310px!important;
+}
+.businessSettingsPanel{
+  display:block;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  width:auto!important;
+  max-width:none!important;
+}
+.businessSettingsPanel.hidden{display:none!important;}
+.settingsRightHost{
+  flex:1 1 auto;
+  min-width:0;
+  overflow:auto;
+}
+.settingsMasterDetail{
+  display:flex!important;
+  align-items:flex-start;
+  gap:16px;
+  width:100%;
+  min-height:650px;
+}
+@media(max-width:900px){
+  .settingsMasterDetail{gap:10px}
+  .settingsMenuV156{flex-basis:250px!important;width:250px!important;min-width:250px!important;max-width:250px!important}
+}
+
+
+
+/* V1.6.3 - MASALAR sade/pro + kullanici sol alt */
+.sideOps{min-height:calc(100vh - 36px);box-sizing:border-box}
+.sidebarUserArea{margin-top:auto!important}
+.tableOverview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin:0 0 24px}
+.tableStat{background:#fff;color:#10233d;border:1px solid #d7e2ef;border-radius:16px;min-height:82px;padding:15px 20px;box-sizing:border-box;box-shadow:0 5px 18px rgba(17,49,82,.06);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.tableStat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:16px 0 0 16px;background:#15aa55}
+.tableStat.blue:before{background:#1686ed}.tableStat.orange:before{background:#f5a000}.tableStat.gray:before{background:#9aabba}
+.tableStat strong{font-size:27px;line-height:1;font-weight:900}.tableStat span{font-size:13px;font-weight:800;color:#63738a;margin-top:7px}
+.tablesClean{background:transparent!important;border:0!important;padding:0!important}.tablesClean>h2{color:inherit;margin:0 0 15px;font-size:25px}
+@media(max-width:900px){.tableOverview{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.tableStat{min-height:76px}.sideOps{min-height:calc(100vh - 30px)}}
+@media(max-width:520px){.tableOverview{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tableStat{padding:13px 15px}.tableStat strong{font-size:23px}.tableStat span{font-size:11px}}
+
+</style></head><body>
+<div id="auth" class="page">
+<section class="left"><div class="brand"><div class="logo">A</div><div>ADİSYON PRO<small>BULUT YÖNETİM PLATFORMU</small></div></div><div class="pitch"><h1>İşletmeni <span>tek hesaptan</span> yönet.</h1><p>Web, tablet ve mobil cihazlardan aynı işletme hesabına güvenli erişim. Kullanıcılar kendi yetkileriyle çalışır.</p><div class="chips"><div class="chip">☁ Bulut hesap</div><div class="chip">👥 Rol bazlı giriş</div><div class="chip">📱 Mobil uyumlu</div><div class="chip">🔐 Güvenli şifre</div></div></div></section>
+<section class="right"><div class="card">
+<div id="mainTabs" class="tabs"><button id="tLogin" class="tab active">GİRİŞ YAP</button><button id="tRegister" class="tab">YENİ İŞLETME</button></div>
+<div id="loginPanel"><h2>Hoş geldiniz</h2><p class="sub">İşletme hesabınıza giriş yapın.</p><label>İŞLETME KODU</label><input id="businessCode" placeholder="AP-XXXXXX"><label>KULLANICI / E-POSTA</label><input id="loginUser" placeholder="ornek@email.com"><label>ŞİFRE</label><input id="loginPassword" type="password" placeholder="••••••"><div class="row"><label class="check" style="margin:0"><input id="rememberMe" type="checkbox"> Beni hatırla</label><span class="link" onclick="showForgot()">Şifremi unuttum</span></div><button class="btn" onclick="login()">GİRİŞ YAP</button><div id="loginMsg" class="msg"></div></div>
+<div id="registerPanel" class="hidden"><h2>Yeni işletme</h2><p class="sub">İlk hesabınız Yönetici olarak oluşturulur.</p><label>İŞLETME ADI</label><input id="regBusiness"><label>YÖNETİCİ ADI</label><input id="regOwner"><label>E-POSTA</label><input id="regEmail" type="email"><label>ŞİFRE</label><input id="regPassword" type="password" placeholder="En az 6 karakter"><button class="btn" onclick="registerBusiness()">İŞLETME OLUŞTUR</button><div id="regMsg" class="msg"></div></div>
+<div id="forgotPanel" class="hidden"><button class="back" onclick="showLogin()">← Girişe dön</button><h2>Şifremi unuttum</h2><p class="sub">İşletme kodunuzu ve kayıtlı e-postanızı girin.</p><label>İŞLETME KODU</label><input id="forgotBusiness"><label>E-POSTA</label><input id="forgotEmail" type="email"><button class="btn" onclick="requestReset()">KOD OLUŞTUR</button><div id="forgotMsg" class="msg"></div><div id="resetFields" class="hidden"><label>6 HANELİ KOD</label><input id="resetCode"><label>YENİ ŞİFRE</label><input id="newPassword" type="password"><button class="btn secondary" onclick="resetPassword()">ŞİFREYİ DEĞİŞTİR</button></div><div class="note">V1.1 test sürümünde e-posta servisi henüz bağlı olmadığı için sıfırlama kodu ekranda gösterilir. Gerçek bulut yayınına geçerken kod e-posta ile gönderilecek.</div></div>
+</div></section></div>
+<div id="dashboard" class="dashboard hidden">
+<div class="hidden" aria-hidden="true">
+  <span id="bizName"></span>
+  <span id="bizCode"></span>
+  <span id="usrName"></span>
+  <span id="usrRole"></span>
+</div>
+<div id="operations" class="ops hidden">
+ <div class="opsShell">
+  <aside id="sideOps" class="sideOps">
+   <button class="sideToggle" onclick="toggleSide()" title="Menüyü daralt"><span class="sideIcon">☰</span><span class="sideLabel">MENÜ</span></button>
+   <button class="sideItem passiveMenu" type="button"><span class="sideIcon">▥</span><span class="sideLabel">Raporlar</span></button>
+   <button id="navTables" class="sideItem" onclick="showOp('tables')"><span class="sideIcon">▦</span><span class="sideLabel">Masalar</span></button>
+   <button class="sideItem passiveMenu" type="button"><span class="sideIcon">⚡</span><span class="sideLabel">Hızlı Sipariş</span></button>
+   <button id="navPrep" class="sideItem" onclick="showOp('prep')"><span class="sideIcon">●</span><span class="sideLabel">Hazırlanacaklar</span></button>
+   <button id="navDelivery" class="sideItem" onclick="showOp('delivery')"><span class="sideIcon">▰</span><span class="sideLabel">Teslim Edilecekler</span></button>
+   <button class="sideItem passiveMenu" type="button"><span class="sideIcon">⌕</span><span class="sideLabel">Aramalar</span></button>
+   <button class="sideItem passiveMenu" type="button"><span class="sideIcon">◫</span><span class="sideLabel">Cari Hesaplar</span></button>
+   <button class="sideItem passiveMenu" type="button"><span class="sideIcon">◷</span><span class="sideLabel">Rezervasyonlar</span></button>
+
+   <div class="sideSectionLabel"><span class="sideLabel">YÖNETİM</span></div>
+   <div id="managerNav" class="hidden">
+    <button class="sideItem passiveMenu" type="button"><span class="sideIcon">₺</span><span class="sideLabel">Finans</span></button>
+    <button class="sideItem passiveMenu" type="button"><span class="sideIcon">♟</span><span class="sideLabel">Personel Yönetimi</span></button>
+    <button class="sideItem passiveMenu" type="button"><span class="sideIcon">▣</span><span class="sideLabel">Kapanan Masalar</span></button>
+    <button class="sideItem passiveMenu" type="button"><span class="sideIcon">＋</span><span class="sideLabel">Eklentiler</span></button>
+    <button class="sideItem passiveMenu" type="button"><span class="sideIcon">≡</span><span class="sideLabel">Logs</span></button>
+    <button id="navSettings" class="sideItem" onclick="showOp('settings')"><span class="sideIcon">⚙</span><span class="sideLabel">Ayarlar</span></button>
+   </div>
+  
+<div class="sidebarUserArea" id="sidebarUserArea">
+  <button class="sidebarUserCard" id="sidebarUserCard" type="button" onclick="toggleUserMenu(event)">
+    <div class="sidebarAvatar" id="sidebarAvatar">A</div>
+    <div class="sidebarUserText">
+      <b id="sidebarUserName">Kullanıcı</b>
+      <small id="sidebarUserRole">Rol</small>
+      <small id="sidebarBusinessName">İşletme</small><small id="sidebarBusinessCode">İşletme Kodu</small>
+    </div>
+    <span class="sidebarUserArrow">⌃</span>
+  </button>
+  <div class="sidebarUserMenu hidden" id="sidebarUserMenu">
+    <div class="sidebarMenuLabel">DESTEK</div>
+    <button class="sidebarAction" type="button" onclick="openAccountSettings()">⚙️ &nbsp;Hesap Ayarları</button>
+    <button class="sidebarAction" type="button" onclick="showSupportInfo()">🎧 &nbsp;Destek</button>
+    <button class="sidebarAction" type="button" onclick="callSupport()">☎️ &nbsp;0505 352 88 42</button>
+    <button class="sidebarAction danger" type="button" onclick="logout()">↪ &nbsp;Çıkış Yap</button>
+  </div>
+  <div class="sidebarMeta">V1.6.2</div>
+
+</aside>
+  <main class="opsMain"><div id="opContent"></div></main>
+ </div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);let token=localStorage.getItem("cloudToken")||sessionStorage.getItem("cloudToken")||"";
+async function api(url,opt={}){opt.headers={...(opt.headers||{}),"Content-Type":"application/json"};if(token)opt.headers.Authorization="Bearer "+token;const r=await fetch(url,opt),d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||"İşlem başarısız");return d}
+function tabs(login){$("loginPanel").classList.toggle("hidden",!login);$("registerPanel").classList.toggle("hidden",login);$("forgotPanel").classList.add("hidden");$("mainTabs").classList.remove("hidden");$("tLogin").classList.toggle("active",login);$("tRegister").classList.toggle("active",!login)}
+$("tLogin").onclick=()=>tabs(true);$("tRegister").onclick=()=>tabs(false);
+function showForgot(){$("mainTabs").classList.add("hidden");$("loginPanel").classList.add("hidden");$("registerPanel").classList.add("hidden");$("forgotPanel").classList.remove("hidden");$("forgotBusiness").value=$("businessCode").value}
+function showLogin(){tabs(true)}
+async function registerBusiness(){try{$("regMsg").textContent="Oluşturuluyor...";let d=await api("/api/register-business",{method:"POST",body:JSON.stringify({businessName:$("regBusiness").value,ownerName:$("regOwner").value,email:$("regEmail").value,password:$("regPassword").value})});$("regMsg").className="msg ok";$("regMsg").textContent="İşletme oluşturuldu. Kod: "+d.business.code;$("businessCode").value=d.business.code;$("loginUser").value=$("regEmail").value;tabs(true)}catch(e){$("regMsg").className="msg";$("regMsg").textContent=e.message}}
+async function login(){try{$("loginMsg").textContent="Giriş yapılıyor...";let remember=$("rememberMe").checked,d=await api("/api/login",{method:"POST",body:JSON.stringify({businessCode:$("businessCode").value,username:$("loginUser").value,password:$("loginPassword").value,rememberMe:remember})});token=d.token;(remember?localStorage:sessionStorage).setItem("cloudToken",token);showDash(d)}catch(e){$("loginMsg").textContent=e.message}}
+async function requestReset(){try{let d=await api("/api/forgot-password",{method:"POST",body:JSON.stringify({businessCode:$("forgotBusiness").value,email:$("forgotEmail").value})});$("forgotMsg").className="msg ok";$("forgotMsg").textContent="Test sıfırlama kodunuz: "+d.devResetCode;$("resetFields").classList.remove("hidden")}catch(e){$("forgotMsg").className="msg";$("forgotMsg").textContent=e.message}}
+async function resetPassword(){try{let d=await api("/api/reset-password",{method:"POST",body:JSON.stringify({businessCode:$("forgotBusiness").value,email:$("forgotEmail").value,code:$("resetCode").value,newPassword:$("newPassword").value})});$("forgotMsg").className="msg ok";$("forgotMsg").textContent=d.message+" Giriş yapabilirsiniz.";setTimeout(showLogin,1000)}catch(e){$("forgotMsg").className="msg";$("forgotMsg").textContent=e.message}}
+function showDash(d){
+  $("auth").classList.add("hidden");$("dashboard").classList.remove("hidden");
+  $("bizName").textContent=d.business.name;$("bizCode").textContent=d.business.code;$("usrName").textContent=d.user.name;
+  const roleNames={manager:"Yönetici",cashier:"Kasiyer",waiter:"Garson",kitchen:"Mutfak"};
+  $("usrRole").textContent=roleNames[d.user.role]||d.user.role.toUpperCase();
+  window.currentUser=d.user; window.currentBusiness=d.business;
+  $("managerNav").classList.toggle("hidden",d.user.role!=="manager");
+  $("operations").classList.remove("hidden");
+  restoreSide();
+  if(d.user.role==="manager") loadUsers();
+  if(d.user.role==="kitchen") showOp("prep"); else showOp("tables");
+}
+
+async function loadUsers(){
+  try{
+    const users=await api("/api/users");
+    const roleNames={manager:"Yönetici",cashier:"Kasa",waiter:"Garson",kitchen:"Hazırlanacaklar"};
+    $("userList").innerHTML=users.map(u=>`
+      <div class="userRow">
+        <div><b>${escapeHtml(u.name)}</b><br><small>@${escapeHtml(u.username||"")}</small></div>
+        <div><span class="roleBadge">${roleNames[u.role]||u.role}</span></div>
+        <div><small>${u.active===false?"PASİF":"AKTİF"}</small></div>
+        <div class="userActions">
+          <button class="miniBtn" onclick="changeUserPassword('${u.id}','${escapeHtml(u.name)}')">Şifre Değiştir</button>
+          <button class="miniBtn warn" onclick="toggleUser('${u.id}',${u.active===false?'true':'false'})">${u.active===false?'Aktif Yap':'Pasif Yap'}</button>
+          <button class="miniBtn danger" onclick="deleteUser('${u.id}','${escapeHtml(u.name)}')">Sil</button>
+        </div>
+      </div>`).join("") || '<div class="userRow"><small>Henüz kullanıcı yok.</small></div>';
+  }catch(e){$("userList").innerHTML='<div class="userRow"><small>'+escapeHtml(e.message)+'</small></div>'}
+}
+async function addUser(){
+  $("userMsg").className="msg";$("userMsg").textContent="Kullanıcı ekleniyor...";
+  try{
+    const d=await api("/api/users",{method:"POST",body:JSON.stringify({
+      name:$("newUserName").value,
+      username:$("newUsername").value,
+      password:$("newUserPassword").value,
+      role:$("newUserRole").value
+    })});
+    $("userMsg").className="msg ok";$("userMsg").textContent=d.user.name+" eklendi.";
+    $("newUserName").value="";$("newUsername").value="";$("newUserPassword").value="";
+    await loadUsers();
+  }catch(e){$("userMsg").className="msg";$("userMsg").textContent=e.message}
+}
+
+async function changeUserPassword(id,name){
+  const p=prompt(name+" için yeni şifre (en az 4 karakter):"); if(p===null)return;
+  try{const d=await api("/api/users/"+id+"/password",{method:"PUT",body:JSON.stringify({password:p})}); showToast(d.message)}catch(e){showToast(e.message)}
+}
+async function toggleUser(id,active){
+  try{await api("/api/users/"+id+"/active",{method:"PUT",body:JSON.stringify({active})}); await loadUsers()}catch(e){showToast(e.message)}
+}
+async function deleteUser(id,name){
+  if(!confirm(name+" kullanıcısını silmek istiyor musunuz?"))return;
+  try{await api("/api/users/"+id,{method:"DELETE",body:"{}"}); await loadUsers()}catch(e){showToast(e.message)}
+}
+
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+
+let tenantState=null, cart=[], selectedTable=null;
+const demoProducts=[
+ {id:"p1",name:"Köfte",price:220},{id:"p2",name:"Kola",price:60},{id:"p3",name:"Türk Kahvesi",price:75},
+ {id:"p4",name:"Çay",price:35},{id:"p5",name:"Hamburger",price:240},{id:"p6",name:"Ayran",price:45}
+];
+async function getState(){tenantState=await api("/api/state");tenantState.tables=tenantState.tables||{};tenantState.kitchenTickets=tenantState.kitchenTickets||[];tenantState.products=(tenantState.products&&tenantState.products.length)?tenantState.products:demoProducts;return tenantState}
+async function saveState(){await api("/api/state",{method:"PUT",body:JSON.stringify(tenantState)})}
+function toggleSide(){const s=$("sideOps");s.classList.toggle("collapsed");localStorage.setItem("sideCollapsed",s.classList.contains("collapsed")?"1":"0")}
+function restoreSide(){if(localStorage.getItem("sideCollapsed")==="1")$("sideOps")?.classList.add("collapsed")}
+function setNav(which){["Tables","Prep","Delivery","Users","Settings"].forEach(x=>$("nav"+x)?.classList.remove("active")); const map={tables:"Tables",prep:"Prep",delivery:"Delivery",users:"Users",settings:"Settings"}; if(map[which])$("nav"+map[which])?.classList.add("active")}
+async function showOp(which){
+ setNav(which);
+ if(which==="users"){if(currentUser?.role!=="manager")return;renderUserManagement();await loadUsers();return}
+ if(which==="settings"){if(currentUser?.role!=="manager")return;renderSettings();return}
+ await getState();if(which==="tables")renderTables();if(which==="prep")renderTickets("preparing");if(which==="delivery")renderTickets("ready")
+}
+function renderUserManagement(){
+ $("opContent").innerHTML=`<div class="userWrap" style="margin-top:0"><div class="userHead"><h3>Kullanıcı Yönetimi</h3><small style="color:#8f98a4">Yönetici / Kasa / Garson / Hazırlanacaklar</small></div><div class="userGrid"><input id="newUserName" placeholder="Ad Soyad"><input id="newUsername" placeholder="Kullanıcı adı"><input id="newUserPassword" type="password" placeholder="Şifre"><select id="newUserRole"><option value="waiter">Garson</option><option value="cashier">Kasa</option><option value="kitchen">Hazırlanacaklar</option><option value="manager">Yönetici</option></select><button class="addUserBtn" onclick="addUser()">+ EKLE</button></div><div id="userMsg" class="msg"></div><div id="userList" class="userList"></div></div>`
+}
+function renderSettings(){
+ $("opContent").innerHTML=`<div class="settingsLayout">
+
+  <div class="settingsMenu settingsMenuV156 settingsMenuRestStyle" id="productsPanel">
+<button class="settingsMenuItem" data-settings-passive="1" onclick="openBusinessSettings()" onclick="openProducts()"><span class="settingsIcon">◷</span><b>Aboneliğim</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem activeSettings" onclick="openBusinessSettings()"><span class="settingsIcon">▦</span><b>İşletme Ayarları</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▣</span><b>Abonelik Faturaları</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">♟</span><b>Genel Ayarlar</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">💵</span><b>Adisyonda Döviz</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▤</span><b>Yazıcılar</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" onclick="openProducts()"><span class="settingsIcon">◉</span><b>Ürünler</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▬</span><b>Ödeme Yöntemleri</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">♣</span><b>Çalışanlar - Kullanıcılar</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▦</span><b>Oturma Düzeni</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">◆</span><b>Kampanyalar</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▰</span><b>Tedarikçiler - Reçete Malzemeler</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">▣</span><b>Ek Ekran Ayarları</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">✚</span><b>Entegrasyon</b><span class="settingsArrow noArrow"></span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">♜</span><b>Eklentiler</b><span class="settingsArrow">›</span></button>
+<button class="settingsMenuItem" data-settings-passive="1"><span class="settingsIcon">✹</span><b>Yapay Zeka Bağlantısı</b><span class="settingsArrow">›</span></button>
+</div>
+  
+    <div id="businessSettingsPanel" class="businessSettingsPanel hidden">
+<div class="settingsContentHeader"><h2>İşletme Ayarları</h2><p>İşletme, adres, servis ve genel ayarlar</p></div>
+<section class="bsCard"><h3>🏢 İşletme Ayarları</h3>
+<label>Şirket Adı<input id="bsCompany" type="text"></label><label>Yetkili Adı<input id="bsAuthorized" type="text"></label>
+<label>Para Birimi<select id="bsCurrency"><option value="TRY">Türk Lirası (₺)</option><option value="USD">Amerikan Doları ($)</option><option value="EUR">Euro (€)</option></select></label>
+<label>Kapanış Saati (otomatik gün sonu raporu)<input id="bsClosing" type="time" value="00:00"></label></section>
+<section class="bsCard"><h3>📍 Adres Bilgileri</h3><label>Ülke<select id="bsCountry"><option value="">Ülke</option><option>Türkiye</option></select></label>
+<div class="bsTimezone">◷ Saat Dilimi: <b>İstanbul (GMT+03:00)</b></div><label>Şehir<input id="bsCity" type="text"></label>
+<label>Mahalle / İlçe<input id="bsDistrict" type="text"></label><label>Adres<input id="bsAddress" type="text"></label><label>Posta Kodu <small>· opsiyonel</small><input id="bsPostal" type="text"></label></section>
+<section class="bsCard"><h3>🍴 Servis Ücreti</h3><label>Servis Ücreti<input id="bsServiceFee" type="number" min="0" step="0.01"></label><label>Servis Ücreti Yazısı<input id="bsServiceText" type="text" value="Servis Ücreti"></label></section>
+<section class="bsCard"><h3>🔔 Self Servis Yazısı</h3><label>Self Servis Yazısı<input id="bsSelfService" type="text" value="SelfService"></label></section>
+<section class="bsCard"><h3>⚙ Genel Ayarlar</h3><div class="bsSwitchRow"><span>Cari Hesaplar özelliğini kapat</span><label class="bsSwitch"><input id="bsCloseAccounts" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>İptal Edilen Siparişleri Kaydetme</span><label class="bsSwitch"><input id="bsDontSaveCancelled" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>Yapılacaklar Listesini Kapat</span><label class="bsSwitch"><input id="bsCloseTodo" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>Çalışanlar Diğer Çalışanların Hesabına Sipariş Ekleyemez</span><label class="bsSwitch"><input id="bsEmployeeRestriction" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>Ürün İptallerinde açıklama zorunlu olsun</span><label class="bsSwitch"><input id="bsCancelReason" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>Masa açılırken kişi sayısı sor</span><label class="bsSwitch"><input id="bsAskGuestCount" type="checkbox"><i></i></label></div><div class="bsSwitchRow"><span>Kasadaki Parayı Takip Et</span><label class="bsSwitch"><input id="bsTrackCash" type="checkbox"><i></i></label></div></section><button class="bsSave" onclick="saveBusinessSettings()">✓ Kaydet</button></div>
+  </div>
+</div>
+
+<div id="settingsContent" class="panelBox"><h2>Ayarlar</h2><div class="empty">Soldan Ürünler bölümünü seçin.</div></div></div>`;
+ renderProductsSettings();
+}
+async function renderProductsSettings(){
+ await getState();
+ const products=tenantState.products||[];
+ const cards=products.map(p=>`<div class="productManageCard"><div class="productInfo">${p.image?`<img class="productThumb" src="${p.image}" alt="">`:''}<div class="productMeta"><b>${escapeHtml(p.name)}</b><small>${Number(p.price||0).toFixed(2)} ₺</small><em>${escapeHtml(p.category||"Genel")}</em></div></div><button class="miniBtn" onclick="editProduct('${p.id}')">Düzenle</button></div>`).join("")||'<div class="empty">Henüz ürün yok.</div>';
+ $("settingsContent").innerHTML=`<div class="userHead"><div><h2>Ürünler</h2><small style="color:#8f98a4">Ürün, fiyat, kategori ve fotoğraf yönetimi</small></div><button class="orangeBtn" onclick="addProductSetting()">+ Yeni Ürün Ekle</button></div><div class="productManageGrid">${cards}</div>`
+}
+let productEditId=null, productImageData="";
+function productModal(product=null){productEditId=product?.id||null;productImageData=product?.image||"";const old=document.getElementById("productModal");if(old)old.remove();const wrap=document.createElement("div");wrap.id="productModal";wrap.className="modalOverlay";wrap.innerHTML=`<div class="modalCard" onclick="event.stopPropagation()"><div class="modalHead"><h2>${product?'Ürünü Düzenle':'Yeni Ürün Ekle'}</h2><button class="modalClose" onclick="closeProductModal()">×</button></div><div class="modalGrid"><div class="full"><label>ÜRÜN ADI</label><input id="pmName" placeholder="Örn. Köfte" value="${escapeHtml(product?.name||'')}"></div><div><label>FİYAT (₺)</label><input id="pmPrice" type="number" min="0" step="0.01" placeholder="0.00" value="${product?Number(product.price||0):''}"></div><div><label>KATEGORİ</label><select id="pmCategory"><option>Genel</option><option>Ana Yemekler</option><option>İçecekler</option><option>Sıcak İçecekler</option><option>Soğuk İçecekler</option><option>Tatlılar</option><option>Atıştırmalıklar</option><option>Kahvaltı</option></select></div><div class="full photoPick"><label style="margin-top:0">ÜRÜN FOTOĞRAFI</label><input id="pmPhoto" type="file" accept="image/*" onchange="previewProductPhoto(this)"><img id="pmPreview" class="photoPreview" alt="Ürün fotoğrafı"></div></div><div id="pmMsg" class="msg"></div><div class="modalActions"><button class="miniBtn" onclick="closeProductModal()">İptal</button><button class="orangeBtn" onclick="saveProductModal()">Kaydet</button></div></div>`;wrap.onclick=closeProductModal;document.body.appendChild(wrap);document.getElementById("pmCategory").value=product?.category||"Genel";if(productImageData){const im=document.getElementById("pmPreview");im.src=productImageData;im.style.display="block";}setTimeout(()=>document.getElementById("pmName").focus(),0)}
+function closeProductModal(){document.getElementById("productModal")?.remove()}
+function previewProductPhoto(input){const f=input.files&&input.files[0];if(!f)return;if(f.size>1500000){document.getElementById("pmMsg").textContent="Fotoğraf en fazla 1.5 MB olabilir.";input.value="";return}const r=new FileReader();r.onload=()=>{productImageData=r.result;const im=document.getElementById("pmPreview");im.src=productImageData;im.style.display="block"};r.readAsDataURL(f)}
+async function addProductSetting(){productModal()}
+async function editProduct(id){await getState();const p=tenantState.products.find(x=>String(x.id)===String(id));if(p)productModal(p)}
+async function saveProductModal(){const name=document.getElementById("pmName").value.trim();const price=Number(document.getElementById("pmPrice").value);const category=document.getElementById("pmCategory").value;const msg=document.getElementById("pmMsg");if(!name){msg.textContent="Ürün adını girin.";return}if(!Number.isFinite(price)||price<0){msg.textContent="Geçerli bir fiyat girin.";return}await getState();tenantState.products=tenantState.products||[];if(productEditId){const p=tenantState.products.find(x=>String(x.id)===String(productEditId));if(!p){msg.textContent="Ürün bulunamadı.";return}p.name=name;p.price=price;p.category=category;p.image=productImageData}else tenantState.products.push({id:"p_"+Date.now(),name,price,category,image:productImageData});await saveState();closeProductModal();renderProductsSettings()}
+function renderTables(){
+ const n=tenantState.tableCount||12;
+ let openCount=0, waitingCount=0;
+ for(let i=1;i<=n;i++){
+   const t=tenantState.tables[i]||{};
+   const isOpen=(t.items||[]).length>0;
+   if(isOpen) openCount++;
+   if(isOpen && (t.status==='ready'||t.serviceWaiting===true)) waitingCount++;
+ }
+ const emptyCount=Math.max(0,n-openCount);
+ let h=`<div class="tableOverview">
+   <div class="tableStat"><strong>${n}</strong><span>Toplam Masa</span></div>
+   <div class="tableStat blue"><strong>${openCount}</strong><span>Dolu Masa</span></div>
+   <div class="tableStat orange"><strong>${waitingCount}</strong><span>Servis Bekleyen</span></div>
+   <div class="tableStat gray"><strong>${emptyCount}</strong><span>Boş Masa</span></div>
+ </div><div class="panelBox tablesClean"><h2>Masalar</h2><div class="tablesGrid">`;
+ for(let i=1;i<=n;i++){
+   const t=tenantState.tables[i]||{};
+   const open=(t.items||[]).length>0;
+   h+=`<div class="tableCard ${open?'open':''}" onclick="openTable(${i})"><h3>Masa ${i}</h3><b>${open?'AÇIK':'BOŞ'}</b><br><small>${open?(t.items||[]).reduce((a,x)=>a+x.qty,0)+' ürün':'Sipariş yok'}</small></div>`;
+ }
+ h+='</div></div>';
+ $('opContent').innerHTML=h;
+ syncSidebarUserCard();
+}
+function openTable(no){selectedTable=no;cart=[];renderOrder()}
+function renderOrder(){const t=tenantState.tables[selectedTable]||{items:[]};let ph=tenantState.products.map(p=>`<button class="productBtn" onclick="addProduct('${p.id}')"><b>${escapeHtml(p.name)}</b><span>${Number(p.price||0).toFixed(2)} ₺</span></button>`).join('');let ch=cart.length?cart.map((x,i)=>`<div class="cartRow"><span><b>${escapeHtml(x.name)}</b> x${x.qty}</span><span><button class="qtyBtn" onclick="qty(${i},-1)">−</button> <button class="qtyBtn" onclick="qty(${i},1)">+</button></span></div>`).join(''):'<div class="empty">Yeni ürün seçin.</div>';$('opContent').innerHTML=`<button class="miniBtn backBtn" onclick="renderTables()">← Masalar</button><div class="panelBox"><h2>Masa ${selectedTable} • Adisyon</h2><div class="orderLayout"><div><h3>Ürünler</h3><div class="products">${ph}</div></div><div><h3>Gönderilecek Yeni Ürünler</h3><div class="cart">${ch}</div><label>SİPARİŞ NOTU</label><input id="orderNote" placeholder="Örn. soğansız, az pişmiş"><button class="orangeBtn" style="width:100%;margin-top:12px" onclick="sendOrder()">SİPARİŞİ KAYDET • HAZIRLANACAKLARA GÖNDER</button><div class="note">Mevcut adisyonda ${(t.items||[]).reduce((a,x)=>a+x.qty,0)} ürün var. Ek siparişte yalnızca yeni seçtikleriniz gönderilir.</div></div></div></div>`}
+function addProduct(id){const p=tenantState.products.find(x=>String(x.id)===String(id));if(!p)return;const x=cart.find(x=>String(x.id)===String(id));if(x)x.qty++;else cart.push({id:p.id,name:p.name,price:Number(p.price||0),qty:1});renderOrder()}
+function qty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);renderOrder()}
+async function sendOrder(){if(!cart.length)return showToast('Önce ürün seçin.');const note=$('orderNote').value.trim();const now=Date.now();const table=tenantState.tables[selectedTable]||{items:[],openedAt:now};cart.forEach(x=>{const e=table.items.find(y=>String(y.id)===String(x.id));if(e)e.qty+=x.qty;else table.items.push({...x})});table.openedAt=table.openedAt||now;table.updatedAt=now;tenantState.tables[selectedTable]=table;tenantState.kitchenTickets.push({id:'kt_'+now+'_'+Math.random().toString(16).slice(2),tableNo:selectedTable,items:cart.map(x=>({...x})),note,waiterId:currentUser.id,waiterName:currentUser.name,createdAt:now,status:'preparing'});await saveState();cart=[];showToast('Sipariş Hazırlanacaklar ekranına gönderildi.');renderTables()}
+function ago(ts){const m=Math.max(0,Math.floor((Date.now()-ts)/60000));return m<1?'şimdi':m+' dakika önce'}
+function renderTickets(status){const list=tenantState.kitchenTickets.filter(t=>t.status===status);const title=status==='preparing'?'Hazırlanacaklar':'Teslim Edilecekler';const action=status==='preparing'?'Seçilenler Hazırlandı':'Seçilenler Teslim Edildi';let h=`<div class="panelBox"><h2>${title}</h2><div class="ticketGrid">`;h+=list.length?list.map(t=>`<div class="ticket"><h3>Masa ${t.tableNo}</h3>${t.items.map(x=>`<div class="item"><b>${x.qty}x ${escapeHtml(x.name)}</b></div>`).join('')}${t.note?`<div class="meta">Not: ${escapeHtml(t.note)}</div>`:''}<div class="meta">${escapeHtml(t.waiterName)} • ${ago(t.createdAt)}</div><button class="orangeBtn" onclick="advanceTicket('${t.id}','${status}')">${action}</button></div>`).join(''):'<div class="empty">Bekleyen sipariş yok.</div>';h+='</div></div>';$('opContent').innerHTML=h}
+async function advanceTicket(id,status){const t=tenantState.kitchenTickets.find(x=>x.id===id);if(!t)return;t.status=status==='preparing'?'ready':'delivered';t[status==='preparing'?'readyAt':'deliveredAt']=Date.now();await saveState();renderTickets(status)}
+
+async function restore(){if(!token)return;try{showDash(await api("/api/me"))}catch{localStorage.removeItem("cloudToken");sessionStorage.removeItem("cloudToken");token=""}}
+async function logout(){try{await api("/api/logout",{method:"POST",body:"{}"})}catch{}localStorage.removeItem("cloudToken");sessionStorage.removeItem("cloudToken");location.reload()}restore();
+
+
+function showToast(message, type="success"){
+  const el=document.getElementById("appToast");
+  if(!el) return;
+  el.textContent=String(message||"");
+  el.className="appToast "+type+" show";
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>{ el.classList.remove("show"); },2600);
+}
+function toggleUserMenu(ev){
+  if(ev) ev.stopPropagation();
+  document.getElementById("sidebarUserMenu")?.classList.toggle("hidden");
+}
+document.addEventListener("click",(e)=>{
+  const area=document.getElementById("sidebarUserArea");
+  if(area && !area.contains(e.target)) document.getElementById("sidebarUserMenu")?.classList.add("hidden");
+});
+function openAccountSettings(){
+  document.getElementById("sidebarUserMenu")?.classList.add("hidden");
+  if(typeof openSettings==="function"){ openSettings(); return; }
+  if(typeof showSettings==="function"){ showSettings(); return; }
+  showToast("Hesap Ayarları bölümü sonraki adımda genişletilecek.");
+}
+function showSupportInfo(){
+  document.getElementById("sidebarUserMenu")?.classList.add("hidden");
+  showToast("Destek: 0505 352 88 42");
+}
+function callSupport(){
+  document.getElementById("sidebarUserMenu")?.classList.add("hidden");
+  window.location.href="tel:05053528842";
+}
+function syncSidebarUserCard(){
+  try{
+    // Use currently rendered UI if available; otherwise common globals.
+    const displayedUser =
+      document.getElementById("usrName")?.textContent?.trim() ||
+      document.getElementById("userName")?.textContent?.trim() ||
+      (window.currentUser && (currentUser.name||currentUser.username)) ||
+      "Kullanıcı";
+    const displayedRole =
+      document.getElementById("usrRole")?.textContent?.trim() ||
+      (window.currentUser && ({manager:"Yönetici",cashier:"Kasiyer",waiter:"Garson",kitchen:"Mutfak"}[currentUser.role]||currentUser.role)) ||
+      "Kullanıcı";
+    const displayedBiz =
+      document.getElementById("bizName")?.textContent?.trim() ||
+      document.getElementById("businessName")?.textContent?.trim() ||
+      (window.currentBusiness && currentBusiness.name) ||
+      "";
+    const nameEl=document.getElementById("sidebarUserName");
+    const roleEl=document.getElementById("sidebarUserRole");
+    const bizEl=document.getElementById("sidebarBusinessName");
+    const bizCodeEl=document.getElementById("sidebarBusinessCode");
+    const av=document.getElementById("sidebarAvatar");
+    if(nameEl) nameEl.textContent=displayedUser;
+    if(roleEl) roleEl.textContent=displayedRole;
+    if(bizEl) bizEl.textContent=displayedBiz;
+    if(bizCodeEl) bizCodeEl.textContent=(document.getElementById("bizCode")?.textContent?.trim()||"");
+    if(av) av.textContent=(displayedUser[0]||"A").toUpperCase();
+
+    // Hide the old large header summary cards.
+    const candidates=[...document.querySelectorAll("div,section")];
+    for(const el of candidates){
+      const txt=(el.textContent||"").replace(/\s+/g," ").trim();
+      if(txt.includes("OTURUM") && txt.includes("ROL") && txt.includes("İŞLETME") && txt.includes("SÜRÜM")){
+        if(el.children.length<=12 && el.getBoundingClientRect().height<260){
+          el.style.display="none";
+          break;
+        }
+      }
+    }
+    // Hide standalone business heading block when it is above the dashboard.
+    const bizHeading=document.getElementById("bizName") || document.getElementById("businessName");
+    if(bizHeading){
+      const p=bizHeading.parentElement;
+      if(p && p.getBoundingClientRect().height<180) p.style.display="none";
+    }
+  }catch(e){console.warn("Kullanıcı kartı:",e)}
+}
+window.addEventListener("load",()=>{setTimeout(syncSidebarUserCard,250);setTimeout(syncSidebarUserCard,900)});
+
+
+
+</script><div id="appToast" class="appToast"></div>
+</body></html>

@@ -1,0 +1,13 @@
+{
+  "name": "adisyon-pro-bulut-v1",
+  "version": "1.0.0",
+  "private": true,
+  "main": "server_cloud.js",
+  "scripts": {
+    "start": "node server_cloud.js",
+    "reset-user": "node reset_user_password.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
